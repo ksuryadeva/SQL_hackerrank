@@ -33,3 +33,47 @@ select distinct(city) from station where substr(city,1,1) in ('A','E','I','O','U
 select distinct city from station where upper(substr(city,1,1)) = any('A','E','I','O','U') and upper(substr(city,-1,1)) = any('A','E','I','O','U');
 
 select distinct(city) from station where upper(substr(city,1,1)) in ('A','E','I','O','U') and upper(substr(city,-1,1)) in ('A','E','I','O','U') ;
+
+------------------------------------------------------------------------------------------------------
+/* Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+*/
+
+Select DISTINCT CITY from STATION where UPPER(SUBSTR(CITY,1,1)) NOT IN ('A','E','I','O','U');
+
+Select distinct(city) from station where REGEXP_LIKE(city,'^[^AEIOU]');
+
+Select distinct(city) from station where REGEXP_LIKE(UPPER(city),'^[^AEIOU]');
+
+------------------------------------------------------------------------------------------------------
+/*Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+*/
+
+SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(CITY, '[^aeiou]$');
+
+SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(UPPER(CITY), -1, 1) NOT IN ('A','E','I','O','U');
+
+--------------------------------------------------------------------------------------------------------
+/*Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. 
+Your result cannot contain duplicates.
+*/
+
+SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(UPPER(CITY), 1, 1) NOT IN ('A','E','I','O','U') OR SUBSTR(UPPER(CITY), -1, 1) NOT IN ('A','E','I','O','U');
+
+SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(LOWER(CITY), '^[^aeiou]|[^aeiou]$');
+
+SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(UPPER(CITY), '^[^AEIOU]') OR REGEXP_LIKE(UPPER(CITY), '[^AEIOU]$');
+
+--------------------------------------------------------------------------------------------------------
+/*Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. 
+Your result cannot contain duplicates.
+*/
+
+SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(UPPER(CITY), 1, 1) NOT IN ('A','E','I','O','U') AND SUBSTR(UPPER(CITY), -1, 1) NOT IN ('A','E','I','O','U');
+
+SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(UPPER(CITY), '^[^AEIOU].+[^AEIOU]$');
+
+SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(UPPER(CITY), '^[^AEIOU]') AND REGEXP_LIKE(UPPER(CITY), '[^AEIOU]$');
+
+---------------------------------------------------------------------------------------------------------
+
+
