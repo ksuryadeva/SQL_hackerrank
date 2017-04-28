@@ -76,4 +76,60 @@ SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(UPPER(CITY), '^[^AEIOU]') AN
 
 ---------------------------------------------------------------------------------------------------------
 
+/*Write a query identifying the type of each record in the TRIANGLES table using its three side lengths. Output one of the following statements for each record in the table:
+
+Not A Triangle: The given values of A, B, and C don't form a triangle.
+Equilateral: It's a triangle with  sides of equal length.
+Isosceles: It's a triangle with  sides of equal length.
+Scalene: It's a triangle with  sides of differing lengths.
+*/
+
+/*
+SELECT              
+           CASE WHEN A + B > C AND B + C > A AND A + C > B THEN
+                CASE 
+                    WHEN A = B AND B = C THEN 'Equilateral'
+                    WHEN A = B OR B = C OR A = C THEN 'Isosceles'
+                    ELSE 'Scalene'
+                END
+            ELSE 'Not A Triangle'
+        END
+FROM TRIANGLES;
+
+/*
+select 
+     case when A + B <= C OR A + C <= B OR C + B <= A then 'Not A Triangle' 
+          when A = B and B = C then 'Equilateral'
+          when A = B or B = C or A = C then 'Isosceles'
+          when A != B AND B != C then 'Scalene'
+          else null end
+from triangles;
+*/
+
+/*
+SELECT CASE
+    WHEN A + B + C - 2*greatest(A,B,C) <= 0 THEN 'Not A Triangle'
+    WHEN A NOT IN (B, C) AND B != C THEN 'Scalene'
+    WHEN A = B AND B = C THEN 'Equilateral'
+    ELSE 'Isosceles' 
+END
+FROM triangles;
+*/
+
+/*
+SELECT CASE
+WHEN (A+B <= C OR B+C <= A OR C+A <= B) THEN 'Not A Triangle'
+WHEN (A = B AND B = C) THEN 'Equilateral'
+WHEN ((A = B AND C <> A) OR (A = C AND B <> A)) THEN 'Isosceles'
+ELSE 'Scalene' 
+END
+FROM TRIANGLES;
+*/
+
+Select 
+    case when a=b and b=c then 'Equilateral' 
+         when (a+b<=c) or (a+c<=b) or (b+c<=a) then 'Not A Triangle' 
+         when (a=b) or (b=c) or (c=a) then 'Isosceles' else 'Scalene' 
+    end 
+from triangles;
 
