@@ -154,4 +154,83 @@ SELECT NAME||'('||substr(OCCUPATION,1,1)||')' FROM OCCUPATIONS ORDER BY NAME;
 SELECT 'There are total '||COUNT(OCCUPATION)||' '||LOWER(occupation)||'s.' FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY COUNT(OCCUPATION),OCCUPATION;
 
 -------------------------------------------------------------------------------------------------------------
+https://www.hackerrank.com/challenges/full-score
+
+Top Competitors:
+
+/*
+Enter your query here.
+Please append a semicolon ";" at the end of the query and enter your query in a single line to avoid error.
+*/
+
+Select H.hacker_id, H.name 
+from Hackers H, Difficulty D, Challenges C, Submissions S
+WHERE D.score=S.Score
+and H.hacker_id=C.hacker_id 
+and c.hacker_id=S.hacker_id 
+and C.challenge_id=S.challenge_id 
+and D.difficulty_level=C.difficulty_level  
+GROUP BY H.hacker_id, H.name having Count(H.name)>1
+ORDER BY Count(S.challenge_id) DESC, H.hacker_id ASC;
+
+/*
+Select H.hacker_id, H.name, S.challenge_id, S.Score from Hackers H, Difficulty D, Challenges C, Submissions S
+WHERE D.score<>S.score
+Group BY H.hacker_id, H.name, S.challenge_id, S.score having Count(H.name)>1
+ORDER BY Count(S.challenge_id) DESC, H.hacker_id ASC;
+*/
+
+/*
+Select H.hacker_id, H.name from 
+Hackers H, 
+Difficulty D, 
+Challenges C, 
+Submissions S
+WHERE 
+H.hacker_id=S.hacker_id 
+and D.Score=S.Score
+and D.Difficulty_level=C.Difficulty_level
+and C.Challenge_id=S.Challenge_id
+GROUP BY H.hacker_id, H.name  HAVING COUNT(S.Score)>1
+ORDER BY COUNT(S.Challenge_id) DESC, H.hacker_id ASC;
+*/
+
+/*
+select hacker_id, name 
+from 
+( 
+select s.hacker_id, h.name, count(1) cnt from submissions s inner join hackers h on s.hacker_id = h.hacker_id inner join challenges c on s.challenge_id = c.challenge_id inner join difficulty d on c.difficulty_level = d.difficulty_level 
+and s.score = d.score group by s.hacker_id, h.name
+)a
+where cnt > 1 order by cnt desc, hacker_id;
+*/
+
+/*
+select h.hacker_id, h.name
+from hackers h join Submissions s on h.hacker_id = s.hacker_id
+join Difficulty  d on s.score = d.score
+join Challenges  c on s.challenge_id = c.challenge_id and d.difficulty_level = c.difficulty_level
+group by h.hacker_id, h.name having count(s.submission_id) > 1
+order by count(s.submission_id) desc, hacker_id asc;
+*/
+
+/*
+SELECT H.HACKER_ID,
+       H.NAME
+       FROM HACKERS H,
+            SUBMISSIONS S,
+            CHALLENGES C,
+            DIFFICULTY D
+            WHERE H.HACKER_ID=S.HACKER_ID
+            AND S.CHALLENGE_ID=C.CHALLENGE_ID
+            AND C.DIFFICULTY_LEVEL=D.DIFFICULTY_LEVEL
+            AND S.SCORE=D.SCORE 
+            GROUP BY H.HACKER_ID,
+                     H.NAME
+            HAVING COUNT(C.CHALLENGE_ID)>1
+            ORDER BY COUNT(C.CHALLENGE_ID) DESC,
+            HACKER_ID;
+*/
+
+
 
